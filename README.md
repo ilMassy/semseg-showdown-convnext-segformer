@@ -89,8 +89,10 @@ Nessuna registrazione o attesa di approvazione richiesta: il download è immedia
 
 ## 🗺️ Roadmap
 
-- [ ] Setup ambiente e struttura progetto (venv, dipendenze, verifica GPU)
-- [ ] Download e verifica dataset PASCAL VOC 2012
+- [x] Setup ambiente e struttura progetto (venv, dipendenze, verifica GPU)
+  - *Nota:* Verificato con `check_environment.py` (PyTorch, CUDA compatibile e librerie principali installate).
+- [x] Download e verifica dataset PASCAL VOC 2012
+  - *Nota:* Dataset scaricato, estratto in `data/VOCdevkit/VOC2012` e validato (17.125 immagini JPEG, 2.913 maschere).
 - [ ] `dataset.py` — caricamento dataset + pipeline di augmentation (Albumentations)
 - [ ] `models.py` — ConvNeXt-UNet (`segmentation-models-pytorch`) e SegFormer (`transformers`)
 - [ ] `train.py` — training loop con mixed precision e logging su Weights & Biases
