@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| 🖼️ **Dataset** | PASCAL VOC 2012 (Segmentation) |
+| 🖼️ **Dataset** | [PASCAL VOC 2012](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/) (Segmentation) |
 | 🖥️ **Hardware** | GPU dedicata, esecuzione locale |
 | 🐧 **Sistema operativo** | Unix-based (Linux) |
 | 🧩 **Modelli** | ConvNeXt-UNet · SegFormer |
