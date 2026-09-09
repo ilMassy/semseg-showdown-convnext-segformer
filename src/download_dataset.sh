@@ -2,12 +2,15 @@
 #
 # Download del dataset PASCAL VOC 2012 (Segmentation) per il progetto SII.
 #
-# Uso:
+# Uso (funziona da qualsiasi directory):
 #   bash src/download_dataset.sh
 #
 set -e
 
-DATA_DIR="./data"
+# Risolve il percorso dello script stesso, così DATA_DIR punta sempre a
+# <root-progetto>/data indipendentemente dalla cartella da cui viene lanciato.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DATA_DIR="${SCRIPT_DIR}/../data"
 VOC_URL="http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar"
 VOC_TAR="${DATA_DIR}/VOCtrainval_11-May-2012.tar"
 
