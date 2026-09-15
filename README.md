@@ -95,7 +95,8 @@ Nessuna registrazione o attesa di approvazione richiesta: il download è immedia
   - *Nota:* Dataset scaricato, estratto in `data/VOCdevkit/VOC2012` e validato (17.125 immagini JPEG, 2.913 maschere).
 - [x] `dataset.py` — caricamento dataset + pipeline di augmentation (Albumentations)
   - *Nota:* Testato con smoke test (`python src/dataset.py`), output verificato: shape corrette, void index (255) gestito, split train/val standard (1464/1449 immagini).
-- [ ] `models.py` — ConvNeXt-UNet (`segmentation-models-pytorch`) e SegFormer (`transformers`)
+- [x] `models.py` — ConvNeXt-UNet (`segmentation-models-pytorch`) e SegFormer (`transformers`)
+  - *Nota:* Testato con smoke test (`python src/models.py`), entrambi i modelli producono output [2, 21, 512, 512]. Parametri totali: ConvNeXt-UNet 31.93M, SegFormer 3.72M — dato utile per l'analisi di efficienza.
 - [ ] `train.py` — training loop con mixed precision e logging su Weights & Biases
 - [ ] `evaluate.py` — mIoU, Dice, F1 per classe, matrice di confusione
 - [ ] `explain.py` — Grad-CAM per ConvNeXt, attention map per SegFormer
