@@ -42,7 +42,7 @@ segmentation-project/
 ├── src/                # Codice sorgente
 │   ├── check_environment.py   # Verifica GPU/CUDA/librerie
 │   ├── download_dataset.sh    # Download PASCAL VOC 2012
-│   ├── dataset.py              # (da creare) Dataset + augmentation
+│   ├── dataset.py              # Dataset + augmentation
 │   ├── models.py                # (da creare) ConvNeXt-UNet e SegFormer
 │   ├── train.py                  # (da creare) Training loop
 │   ├── evaluate.py               # (da creare) Metriche (mIoU, Dice, F1)
@@ -93,7 +93,8 @@ Nessuna registrazione o attesa di approvazione richiesta: il download è immedia
   - *Nota:* Verificato con `check_environment.py` (PyTorch, CUDA compatibile e librerie principali installate).
 - [x] Download e verifica dataset PASCAL VOC 2012
   - *Nota:* Dataset scaricato, estratto in `data/VOCdevkit/VOC2012` e validato (17.125 immagini JPEG, 2.913 maschere).
-- [ ] `dataset.py` — caricamento dataset + pipeline di augmentation (Albumentations)
+- [x] `dataset.py` — caricamento dataset + pipeline di augmentation (Albumentations)
+  - *Nota:* Testato con smoke test (`python src/dataset.py`), output verificato: shape corrette, void index (255) gestito, split train/val standard (1464/1449 immagini).
 - [ ] `models.py` — ConvNeXt-UNet (`segmentation-models-pytorch`) e SegFormer (`transformers`)
 - [ ] `train.py` — training loop con mixed precision e logging su Weights & Biases
 - [ ] `evaluate.py` — mIoU, Dice, F1 per classe, matrice di confusione
