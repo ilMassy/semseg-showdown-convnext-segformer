@@ -97,7 +97,8 @@ Nessuna registrazione o attesa di approvazione richiesta: il download è immedia
   - *Nota:* Testato con smoke test (`python src/dataset.py`), output verificato: shape corrette, void index (255) gestito, split train/val standard (1464/1449 immagini).
 - [x] `models.py` — ConvNeXt-UNet (`segmentation-models-pytorch`) e SegFormer (`transformers`)
   - *Nota:* Testato con smoke test (`python src/models.py`), entrambi i modelli producono output [2, 21, 512, 512]. Parametri totali: ConvNeXt-UNet 31.93M, SegFormer 3.72M — dato utile per l'analisi di efficienza.
-- [ ] `train.py` — training loop con mixed precision e logging su Weights & Biases
+- [x] `train.py` — training loop con mixed precision e logging su Weights & Biases
+  - *Nota:* Training completo eseguito per entrambi i modelli (50 epoche, `dice_focal`, augmentation attiva, `img_size=512`). ConvNeXt-UNet: mIoU=0.7594, Dice=0.8549, 67.6min. SegFormer: mIoU=0.6543, Dice=0.7803, 35.0min.
 - [ ] `evaluate.py` — mIoU, Dice, F1 per classe, matrice di confusione
 - [ ] `explain.py` — Grad-CAM per ConvNeXt, attention map per SegFormer
 - [ ] Ablation study — augmentation, loss (Cross-Entropy vs Dice+Focal), risoluzione input
