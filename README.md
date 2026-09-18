@@ -42,11 +42,17 @@ segmentation-project/
 ├── src/                # Codice sorgente
 │   ├── check_environment.py   # Verifica GPU/CUDA/librerie
 │   ├── download_dataset.sh    # Download PASCAL VOC 2012
-│   ├── dataset.py              # Dataset + augmentation
-│   ├── models.py                # (da creare) ConvNeXt-UNet e SegFormer
-│   ├── train.py                  # (da creare) Training loop
-│   ├── evaluate.py               # (da creare) Metriche (mIoU, Dice, F1)
-│   └── explain.py                # (da creare) Grad-CAM / attention map
+│   ├── dataset.py              # Dataset + augmentation (Albumentations)
+│   ├── models.py                # ConvNeXt-UNet e SegFormer
+│   ├── train.py                  # Training loop (loss, augmentation, efficienza)
+│   ├── evaluate.py               # Metriche per classe (mIoU, Dice/F1, confusion matrix)
+│   └── explain.py                # Grad-CAM (ConvNeXt) / attention map (SegFormer)
+├── results/             # Output di evaluate.py ed explain.py
+│   ├── eval_results_convnext_unet.json   # Metriche per classe + efficienza
+│   ├── eval_results_segformer.json       # Metriche per classe + efficienza
+│   ├── confusion_matrix_convnext_unet.npy  # Confusion matrix 21x21
+│   ├── confusion_matrix_segformer.npy      # Confusion matrix 21x21
+│   └── explanations/    # Grad-CAM / attention map su esempi reali
 ├── notebooks/          # Analisi esplorativa, visualizzazioni
 ├── checkpoints/         # Pesi dei modelli salvati (non versionato su Git)
 ├── configs/             # File di configurazione esperimenti (YAML)
@@ -94,15 +100,18 @@ Nessuna registrazione o attesa di approvazione richiesta: il download è immedia
 - [x] Download e verifica dataset PASCAL VOC 2012
   - *Nota:* Dataset scaricato, estratto in `data/VOCdevkit/VOC2012` e validato (17.125 immagini JPEG, 2.913 maschere).
 - [x] `dataset.py` — caricamento dataset + pipeline di augmentation (Albumentations)
-  - *Nota:* Testato con smoke test (`python src/dataset.py`), output verificato: shape corrette, void index (255) gestito, split train/val standard (1464/1449 immagini).
+  - *Nota:* Testato con smoke test (`python src/dataset.py`), output verificato: shape corrette, void index (255) gestito, split train/val standard (1464/1449 immagini). Augmentation disattivabile (`use_augmentation`) per l'ablation study.
 - [x] `models.py` — ConvNeXt-UNet (`segmentation-models-pytorch`) e SegFormer (`transformers`)
   - *Nota:* Testato con smoke test (`python src/models.py`), entrambi i modelli producono output [2, 21, 512, 512]. Parametri totali: ConvNeXt-UNet 31.93M, SegFormer 3.72M — dato utile per l'analisi di efficienza.
-- [x] `train.py` — training loop con mixed precision e logging su Weights & Biases
-  - *Nota:* Training completo eseguito per entrambi i modelli (50 epoche, `dice_focal`, augmentation attiva, `img_size=512`). ConvNeXt-UNet: mIoU=0.7594, Dice=0.8549, 67.6min. SegFormer: mIoU=0.6543, Dice=0.7803, 35.0min.
-- [ ] `evaluate.py` — mIoU, Dice, F1 per classe, matrice di confusione
-- [ ] `explain.py` — Grad-CAM per ConvNeXt, attention map per SegFormer
+- [x] `train.py` — training loop con mixed precision, gradient accumulation, checkpointing
+  - *Nota:* Training completo eseguito per entrambi i modelli (50 epoche, `dice_focal`, augmentation attiva, `img_size=512`). ConvNeXt-UNet: mIoU=0.7594, Dice=0.8549, 67.6min. SegFormer: mIoU=0.6543, Dice=0.7803, 35.0min. Loss selezionabile (`--loss_type ce/dice_focal`) e augmentation disattivabile (`--no_augmentation`) per l'ablation study.
+- [x] `evaluate.py` — mIoU, Dice/F1 per classe, matrice di confusione
+  - *Nota:* Eseguito su entrambi i checkpoint. Classi più deboli per entrambi i modelli: `chair`, `sofa`, `diningtable` (difficoltà intrinseca del dataset). Risultati salvati in `eval_results_<model>.json`.
+- [x] `explain.py` — Grad-CAM per ConvNeXt, attention map per SegFormer
+  - *Nota:* Confermato funzionante su GPU reale per entrambi i modelli, sia in modalità base (target = predizione) sia in modalità "analisi errori" (target = ground truth, `--mask_path`).
 - [ ] Ablation study — augmentation, loss (Cross-Entropy vs Dice+Focal), risoluzione input
-- [ ] Analisi di efficienza — tempi di training/inferenza, numero di parametri
+- [x] Analisi di efficienza — tempi di training/inferenza, numero di parametri
+  - *Nota:* Training: 67.6min/50 epoche ConvNeXt-UNet, 35.0min SegFormer. Inferenza (batch=1): 21.38ms/46.78 FPS ConvNeXt-UNet, 7.48ms/133.63 FPS SegFormer.
 - [ ] Report finale + repository GitHub pubblico
 
 ---
