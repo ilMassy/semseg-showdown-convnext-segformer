@@ -91,6 +91,20 @@ bash src/download_dataset.sh
 
 Nessuna registrazione o attesa di approvazione richiesta: il download è immediato.
 
+## 📦 Checkpoint pretrained
+
+I pesi dei modelli addestrati (`checkpoints/`) non sono versionati su Git (uno dei due file
+supera il limite di 100MB di GitHub) — sono ospitati su Hugging Face Hub:
+👉 [ilMassy/semseg-convnext-segformer-voc2012](https://huggingface.co/ilMassy/semseg-convnext-segformer-voc2012)
+
+Per scaricarli e rimetterli al posto giusto prima di lanciare `evaluate.py` o `explain.py`:
+
+```bash
+mkdir -p checkpoints
+wget https://huggingface.co/ilMassy/semseg-convnext-segformer-voc2012/resolve/main/convnext_unet_best.pt -O checkpoints/convnext_unet_best.pt
+wget https://huggingface.co/ilMassy/semseg-convnext-segformer-voc2012/resolve/main/segformer_best.pt -O checkpoints/segformer_best.pt
+```
+
 ---
 
 ## 🗺️ Roadmap
