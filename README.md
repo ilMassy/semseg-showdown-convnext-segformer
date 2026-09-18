@@ -38,26 +38,27 @@ locale su GPU dedicata, senza servizi cloud a pagamento.
 
 ```
 segmentation-project/
-├── data/               # Dataset (scaricato, non versionato su Git)
-├── src/                # Codice sorgente
-│   ├── check_environment.py   # Verifica GPU/CUDA/librerie
-│   ├── download_dataset.sh    # Download PASCAL VOC 2012
-│   ├── dataset.py              # Dataset + augmentation (Albumentations)
-│   ├── models.py                # ConvNeXt-UNet e SegFormer
-│   ├── train.py                  # Training loop (loss, augmentation, efficienza)
-│   ├── evaluate.py               # Metriche per classe (mIoU, Dice/F1, confusion matrix)
-│   └── explain.py                # Grad-CAM (ConvNeXt) / attention map (SegFormer)
-├── results/             # Output di evaluate.py ed explain.py
-│   ├── eval_results_convnext_unet.json   # Metriche per classe + efficienza
-│   ├── eval_results_segformer.json       # Metriche per classe + efficienza
-│   ├── confusion_matrix_convnext_unet.npy  # Confusion matrix 21x21
-│   ├── confusion_matrix_segformer.npy      # Confusion matrix 21x21
-│   └── explanations/    # Grad-CAM / attention map su esempi reali
-├── notebooks/          # Analisi esplorativa, visualizzazioni
 ├── checkpoints/         # Pesi dei modelli salvati (non versionato su Git)
 ├── configs/             # File di configurazione esperimenti (YAML)
-├── requirements.txt
-└── README.md
+├── data/                # Dataset (scaricato, non versionato su Git)
+├── notebooks/           # Analisi esplorativa, visualizzazioni
+├── results/             # Output di evaluate.py ed explain.py
+│   ├── explanations/    # Grad-CAM / attention map su esempi reali
+│   ├── confusion_matrix_convnext_unet.npy  # Confusion matrix 21x21
+│   ├── confusion_matrix_segformer.npy      # Confusion matrix 21x21
+│   ├── eval_results_convnext_unet.json     # Metriche per classe + efficienza
+│   └── eval_results_segformer.json         # Metriche per classe + efficienza
+├── src/                 # Codice sorgente
+│   ├── check_environment.py    # Verifica GPU/CUDA/librerie
+│   ├── dataset.py              # Dataset + augmentation (Albumentations)
+│   ├── download_dataset.sh     # Download PASCAL VOC 2012
+│   ├── evaluate.py             # Metriche per classe (mIoU, Dice/F1, confusion matrix)
+│   ├── explain.py              # Grad-CAM (ConvNeXt) / attention map (SegFormer)
+│   ├── models.py               # ConvNeXt-UNet e SegFormer
+│   └── train.py                # Training loop (loss, augmentation, efficienza)
+├── .gitignore          # File e cartelle esclusi dal controllo versione
+├── README.md           # Documentazione e stato di avanzamento del progetto
+└── requirements.txt    # Dipendenze Python del progetto
 ```
 
 ---
