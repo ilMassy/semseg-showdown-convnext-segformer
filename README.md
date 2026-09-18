@@ -50,8 +50,8 @@ segmentation-project/
 │   └── eval_results_segformer.json         # Metriche per classe + efficienza
 ├── src/                 # Codice sorgente
 │   ├── check_environment.py    # Verifica GPU/CUDA/librerie
-│   ├── download_dataset.sh     # Download PASCAL VOC 2012
 │   ├── dataset.py              # Dataset + augmentation (Albumentations)
+│   ├── download_dataset.sh     # Download PASCAL VOC 2012
 │   ├── evaluate.py             # Metriche per classe (mIoU, Dice/F1, confusion matrix)
 │   ├── explain.py              # Grad-CAM (ConvNeXt) / attention map (SegFormer)
 │   ├── models.py               # ConvNeXt-UNet e SegFormer
