@@ -39,11 +39,11 @@ locale su GPU dedicata, senza servizi cloud a pagamento.
 ```
 segmentation-project/
 ├── checkpoints/         # Pesi dei modelli salvati (non versionato su Git)
-│   ├── convnext_unet_best.pt        # Baseline ConvNeXt-UNet
-│   ├── segformer_best.pt            # Baseline SegFormer
 │   ├── ablation_loss_ce/            # Ablation: loss Cross-Entropy pura
 │   ├── ablation_no_aug/             # Ablation: augmentation disattivata
-│   └── ablation_res384/             # Ablation: risoluzione input 384px
+│   ├── ablation_res384/             # Ablation: risoluzione input 384px
+│   ├── convnext_unet_best.pt        # Baseline ConvNeXt-UNet
+│   └── segformer_best.pt            # Baseline SegFormer
 ├── configs/             # File di configurazione esperimenti (YAML)
 ├── data/                # Dataset (scaricato, non versionato su Git)
 ├── notebooks/           # Analisi esplorativa, visualizzazioni
