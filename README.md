@@ -39,9 +39,15 @@ locale su GPU dedicata, senza servizi cloud a pagamento.
 ```
 segmentation-project/
 ├── checkpoints/         # Pesi dei modelli salvati (non versionato su Git)
+│   ├── convnext_unet_best.pt        # Baseline ConvNeXt-UNet
+│   ├── segformer_best.pt            # Baseline SegFormer
+│   ├── ablation_loss_ce/            # Ablation: loss Cross-Entropy pura
+│   ├── ablation_no_aug/             # Ablation: augmentation disattivata
+│   └── ablation_res384/             # Ablation: risoluzione input 384px
 ├── configs/             # File di configurazione esperimenti (YAML)
 ├── data/                # Dataset (scaricato, non versionato su Git)
 ├── notebooks/           # Analisi esplorativa, visualizzazioni
+├── report/              # Report finale (PDF) e slide per la discussione
 ├── results/             # Output di evaluate.py ed explain.py
 │   ├── explanations/    # Grad-CAM / attention map su esempi reali
 │   ├── confusion_matrix_convnext_unet.npy  # Confusion matrix 21x21
@@ -106,6 +112,21 @@ wget https://huggingface.co/ilMassy/semseg-convnext-segformer-voc2012/resolve/ma
 wget https://huggingface.co/ilMassy/semseg-convnext-segformer-voc2012/resolve/main/segformer_best.pt -O checkpoints/segformer_best.pt
 ```
 
+Sono disponibili anche i checkpoint delle configurazioni dell'ablation study (vedi
+[model card](https://huggingface.co/ilMassy/semseg-convnext-segformer-voc2012)):
+
+```bash
+mkdir -p checkpoints/ablation_loss_ce checkpoints/ablation_no_aug checkpoints/ablation_res384
+wget https://huggingface.co/ilMassy/semseg-convnext-segformer-voc2012/resolve/main/ablation/loss_ce/convnext_unet_best.pt -O checkpoints/ablation_loss_ce/convnext_unet_best.pt
+wget https://huggingface.co/ilMassy/semseg-convnext-segformer-voc2012/resolve/main/ablation/no_augmentation/convnext_unet_best.pt -O checkpoints/ablation_no_aug/convnext_unet_best.pt
+wget https://huggingface.co/ilMassy/semseg-convnext-segformer-voc2012/resolve/main/ablation/resolution_384/convnext_unet_best.pt -O checkpoints/ablation_res384/convnext_unet_best.pt
+```
+
+## 📄 Report e presentazione
+
+- **Report finale** (stile paper di ricerca, con bibliografia): [`report/Final_Report_ITA.pdf`](report/Final_Report_ITA.pdf)
+- **Slide per la discussione**: [`report/Presentazione.pptx`](report/Presentazione.pptx)
+
 ---
 
 ## 🗺️ Roadmap
@@ -124,10 +145,12 @@ wget https://huggingface.co/ilMassy/semseg-convnext-segformer-voc2012/resolve/ma
   - *Nota:* Eseguito su entrambi i checkpoint. Classi più deboli per entrambi i modelli: `chair`, `sofa`, `diningtable` (difficoltà intrinseca del dataset). Risultati salvati in `eval_results_<model>.json`.
 - [x] `explain.py` — Grad-CAM per ConvNeXt, attention map per SegFormer
   - *Nota:* Confermato funzionante su GPU reale per entrambi i modelli, sia in modalità base (target = predizione) sia in modalità "analisi errori" (target = ground truth, `--mask_path`).
-- [ ] Ablation study — augmentation, loss (Cross-Entropy vs Dice+Focal), risoluzione input
+- [x] Ablation study — augmentation, loss (Cross-Entropy vs Dice+Focal), risoluzione input
+  - *Nota:* 3 run su ConvNeXt-UNet (50 epoche ciascuna). Loss CE pura: mIoU=0.7531 (quasi pari al baseline 0.7594, ma con overfitting marcato: train loss → 0.09 mentre val resta piatta a 0.28). Augmentation OFF: mIoU=0.7076 (−0.052 vs baseline, training instabile). Risoluzione 384px: mIoU=0.7599 (praticamente invariata, tempo di training dimezzato: 30.7 vs 67.6min).
 - [x] Analisi di efficienza — tempi di training/inferenza, numero di parametri
   - *Nota:* Training: 67.6min/50 epoche ConvNeXt-UNet, 35.0min SegFormer. Inferenza (batch=1): 21.38ms/46.78 FPS ConvNeXt-UNet, 7.48ms/133.63 FPS SegFormer.
-- [ ] Report finale + repository GitHub pubblico
+- [x] Repository GitHub pubblico, popolato con codice, risultati e checkpoint (via Hugging Face Hub)
+- [x] Report finale (PDF, stile paper di ricerca) + slide per la discussione
 
 ---
 
