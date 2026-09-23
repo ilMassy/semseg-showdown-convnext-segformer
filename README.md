@@ -18,8 +18,7 @@
 L'obiettivo è realizzare un sistema di segmentazione semantica delle immagini,
 con un confronto approfondito tra architetture convoluzionali moderne e
 architetture transformer-based, orientato non solo alle performance predittive
-ma anche al rigore metodologico e all'analisi critica dei risultati. Il progetto
-nasce nell'ambito del corso di Sistemi Intelligenti per Internet.
+ma anche al rigore metodologico e all'analisi critica dei risultati.
 
 Il progetto copre:
 
@@ -150,7 +149,6 @@ wget https://huggingface.co/ilMassy/semseg-convnext-segformer-voc2012/resolve/ma
 - [x] Analisi di efficienza — tempi di training/inferenza, numero di parametri
   - *Nota:* Training: 67.6min/50 epoche ConvNeXt-UNet, 35.0min SegFormer. Inferenza (batch=1): 21.38ms/46.78 FPS ConvNeXt-UNet, 7.48ms/133.63 FPS SegFormer.
 - [x] Repository GitHub pubblico, popolato con codice, risultati e checkpoint (via Hugging Face Hub)
-- [x] Report finale (PDF, stile paper di ricerca) + slide per la discussione
 
 ---
 
